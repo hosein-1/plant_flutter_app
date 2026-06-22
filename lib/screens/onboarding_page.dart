@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plant_app/const/constants.dart';
+import 'package:plant_app/screens/root.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -117,7 +118,7 @@ class _OnboardingPage extends State<OnboardingPage> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
+                          builder: (context) => const RootPage(),
                         ),
                       );
                     }
@@ -186,11 +187,3 @@ class CreatePage extends StatelessWidget {
   }
 }
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
-  }
-}
