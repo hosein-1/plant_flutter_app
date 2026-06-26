@@ -9,6 +9,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _ScanPageState extends State<HomePage> {
+  int selectedIndex = 0;
+  final List<String> _plantTypes = [
+    '| پیشنهادی |',
+    '| آپارتمانی |',
+    '| محل‌کار |',
+    '| گل باغچه‌ای |',
+    '| گل سمی |',
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -16,6 +24,7 @@ class _ScanPageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            //search box
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Center(
@@ -60,6 +69,45 @@ class _ScanPageState extends State<HomePage> {
                     ],
                   ),
                 ),
+              ),
+            ),
+            //category
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 18.0,
+                vertical: 10.0,
+              ),
+              height: 70.0,
+              width: size.width,
+              child: ListView.builder(
+                reverse: true,
+                itemCount: _plantTypes.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: Text(
+                        _plantTypes[index],
+                        style: TextStyle(
+                          fontFamily: 'iranSans',
+                          fontSize: 16.0,
+                          fontWeight: selectedIndex == index
+                              ? FontWeight.bold
+                              : FontWeight.w300,
+                          color: selectedIndex == index
+                              ? Constants.primaryColor
+                              : Constants.blackColor,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
