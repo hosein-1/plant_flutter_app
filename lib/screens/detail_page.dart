@@ -12,6 +12,9 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  bool toggleIsSelected(bool isSelected) {
+    return !isSelected;
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -252,13 +255,21 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                   ],
                 ),
-                child: const Center(
-                  child: Text(
-                    'افزودن به سبد خرید',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Lalezar',
-                      fontSize: 20.0,
+                child: Center(
+                  child: InkResponse(
+                    onTap: (){
+                      setState(() {
+                        bool isSelected = toggleIsSelected(plantList[widget.plantId].isSelected);
+                        plantList[widget.plantId].isSelected = isSelected;
+                      });
+                    },
+                    child: const Text(
+                      'افزودن به سبد خرید',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Lalezar',
+                        fontSize: 20.0,
+                      ),
                     ),
                   ),
                 ),
