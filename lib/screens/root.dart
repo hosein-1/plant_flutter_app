@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:plant_app/models/plant.dart';
 import 'package:plant_app/screens/cart_page.dart';
 import 'package:plant_app/screens/favorite_page.dart';
 import 'package:plant_app/screens/home_page.dart';
@@ -17,12 +18,17 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int bottomIndex = 0;
-  List<Widget> pages = const [
-    HomePage(),
-    FavoritePage(),
-    CartPage(),
-    ProfilePage(),
-  ];
+  List<Plant> favorites = [];
+  List<Plant> myCart = [];
+  List<Widget> pages() {
+    return [
+      const HomePage(),
+      FavoritePage(favoritedPlants: favorites),
+      CartPage(addToCartPlants: myCart,),
+      const ProfilePage(),
+    ];
+  }
+
   List<IconData> iconList = [
     Icons.home,
     Icons.favorite,
@@ -59,7 +65,7 @@ class _RootPageState extends State<RootPage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
       ),
-      body: IndexedStack(index: bottomIndex, children: pages),
+      body: IndexedStack(index: bottomIndex, children: pages()),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -86,6 +92,12 @@ class _RootPageState extends State<RootPage> {
         onTap: (index) {
           setState(() {
             bottomIndex = index;
+            final List<Plant> favoritedPlants = Plant.getFavoritedPlants();
+            final List<Plant> addedToCart = Plant.addedToCartPlants();
+
+            favorites = favoritedPlants.toSet().toList();
+            myCart = addedToCart.toSet().toList();
+
           });
         },
       ),
